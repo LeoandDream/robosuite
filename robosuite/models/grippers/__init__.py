@@ -2,6 +2,8 @@ from .gripper_model import GripperModel
 from .gripper_factory import gripper_factory
 from .gripper_tester import GripperTester
 
+
+from .dh116_gripper import DH116
 from .panda_gripper import PandaGripper
 from .rethink_gripper import RethinkGripper
 from .robotiq_85_gripper import Robotiq85Gripper
@@ -17,6 +19,7 @@ from .fourier_hands import FourierLeftHand, FourierRightHand
 from .xarm7_gripper import XArm7Gripper
 
 GRIPPER_MAPPING = {
+    "DH116": DH116,
     "RethinkGripper": RethinkGripper,
     "PandaGripper": PandaGripper,
     "JacoThreeFingerGripper": JacoThreeFingerGripper,

@@ -522,7 +522,10 @@ class MjModel(metaclass=_MjModelMeta):
         elif joint_type == mujoco.mjtJoint.mjJNT_BALL:
             ndim = 4
         else:
-            assert joint_type in (mujoco.mjtJoint.mjJNT_HINGE, mujoco.mjtJoint.mjJNT_SLIDE)
+            assert int(joint_type) in (
+                int(mujoco.mjtJoint.mjJNT_HINGE),
+                int(mujoco.mjtJoint.mjJNT_SLIDE),
+            )
             ndim = 1
 
         if ndim == 1:
@@ -547,7 +550,10 @@ class MjModel(metaclass=_MjModelMeta):
         elif joint_type == mujoco.mjtJoint.mjJNT_BALL:
             ndim = 3
         else:
-            assert joint_type in (mujoco.mjtJoint.mjJNT_HINGE, mujoco.mjtJoint.mjJNT_SLIDE)
+            assert int(joint_type) in (
+                int(mujoco.mjtJoint.mjJNT_HINGE),
+                int(mujoco.mjtJoint.mjJNT_SLIDE),
+            )
             ndim = 1
 
         if ndim == 1:

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  MuJoCo MJCF model for DH116-L000-A1 Dexterous Hand (Left)
+  ============================================================
+  Converted from the DH116 URDF package and README formulas.
+-->
+
+<mujoco model="DH116-L000-A1">
+
+  <!-- <compiler angle="radian" meshdir="meshes/DH116_L" eulerseq="XYZ" autolimits="true"/> -->
+  <compiler angle="radian" eulerseq="XYZ" autolimits="true"/>
+  <!-- <option gravity="0 0 -9.81" timestep="0.002" iterations="100"/> -->
+
+  <!-- <default class="dh116">
+    <joint type="hinge" damping="2.0" armature="0.01" frictionloss="0"/>
+    <geom condim="4" friction="1.0 0.005 0.001" contype="0" conaffinity="0"/>
+    <equality solref="0.004 1" solimp="0.9 0.99 0.001 0.5 2"/>
+  </default> -->
+
+  <asset>
+    <mesh name="base_link" file="meshes/DH116_L/base_link.STL"/>
+    <mesh name="finger11_link" file="meshes/DH116_L/finger11_link.STL"/>
+    <mesh name="finger12_link" file="meshes/DH116_L/finger12_link.STL"/>
+    <mesh name="finger13_link" file="meshes/DH116_L/finger13_link.STL"/>
+    <mesh name="finger14_link" file="meshes/DH116_L/finger14_link.STL"/>
+    <mesh name="finger21_link" file="meshes/DH116_L/finger21_link.STL"/>
+    <mesh name="finger22_link" file="meshes/DH116_L/finger22_link.STL"/>
+    <mesh name="finger23_link" file="meshes/DH116_L/finger23_link.STL"/>
+    <mesh name="finger31_link" file="meshes/DH116_L/finger31_link.STL"/>
+    <mesh name="finger32_link" file="meshes/DH116_L/finger32_link.STL"/>
+    <mesh name="finger33_link" file="meshes/DH116_L/finger33_link.STL"/>
+    <mesh name="finger41_link" file="meshes/DH116_L/finger41_link.STL"/>
+    <mesh name="finger42_link" file="meshes/DH116_L/finger42_link.STL"/>
+    <mesh name="finger43_link" file="meshes/DH116_L/finger43_link.STL"/>
+    <mesh name="finger51_link" file="meshes/DH116_L/finger51_link.STL"/>
+    <mesh name="finger52_link" file="meshes/DH116_L/finger52_link.STL"/>
+    <mesh name="finger53_link" file="meshes/DH116_L/finger53_link.STL"/>
+  </asset>
+
+  <worldbody>
+  <!-- add a camera -->
+    <!-- <camera
+    name="hand_camera"
+    pos="0.0 -0.15 0.12"
+    xyaxes="1.0 -0.0 0.0 0.0 0.4228854653311238 0.9061831399952655"
+    /> -->
+    <!-- <camera
+      name="hand_camera"
+      pos="0.0 -0.35 0.3"
+      xyaxes="1.0 -0.0 0.0 0.0 0.4 0.9"
+    /> -->
+  <!-- 添加安装点位 -->
+    <site 
+      name="grip_site"
+      pos="0 0 0.12"
+      size="0.005"
+      rgba="0 1 0 1"
+    />
+
+    <site
+      name="grip_cylinder"
+      pos="0 0 0.06"
+      size="0.003"
+      rgba="1 0 0 1"
+    />
+    <body name="eef" pos="0 0 0" quat="1 0 0 0">
+      <body name="base_link" pos="0 0 0">
+        <geom name="base_link" type="mesh" mesh="base_link" rgba="1 1 1 1"/>
+        <inertial pos="-0.004908 -0.0023087 0.053425"
+                  mass="0.11674"
+                  fullinertia="8.8343E-05 5.7065E-05 4.4559E-05 -1.5779E-07 2.7103E-06 4.0956E-07"/>
+
+        <!-- ===== 手指 1：大拇指 (Thumb) ===== -->
+        <body name="finger11_link"
+              pos="0.018 -0.021464 0.040041"
+              euler="0.087266 0 0">
+          <joint name="finger11" type="hinge" axis="0 0 1" range="0 1.047198" damping="2.0" armature="0.01" frictionloss="0"/>
+          <geom name="finger11_link" type="mesh" mesh="finger11_link" rgba="1 1 1 1"/>
+          <inertial pos="0.0078225 -0.0020462 0.00068777"
+                    mass="0.010254"
+                    fullinertia="7.2141E-07 1.1141E-06 1.144E-06 1.1025E-07 1.8578E-07 -4.8596E-08"/>
+          <body name="finger12_link"
+                pos="0.018876 -0.0049375 -0.0023593"
+                euler="0 0.95149 -0.25585">
+            <joint name="finger12" type="hinge" axis="0 -1 0" range="0 0.523599" damping="2.0" armature="0.01" frictionloss="0"/>
+            <geom name="finger12_link" type="mesh" mesh="finger12_link" rgba="1 1 1 1"/>
+            <inertial pos="0.001442 5.4239E-07 0.024371"
+                      mass="0.010117"
+                      fullinertia="2.4721E-06 2.2849E-06 8.8673E-07 3.5819E-11 -8.7771E-08 1.0447E-12"/>
+            <body name="finger13_link"
+                  pos="0 0 0.045"
+                  euler="0 0 0">
+              <joint name="finger13" type="hinge" axis="0 -1 0" range="0.004592 0.594583" damping="2.0" armature="0.01" frictionloss="0"/>
+              <geom name="finger13_link" type="mesh" mesh="finger13_link" rgba="1 1 1 1" contype="1" conaffinity="1"/>
+              <inertial pos="0.0064864 1.9023E-06 0.014709"
+                        mass="0.020548"
+                        fullinertia="2.4642E-06 2.3554E-06 8.7678E-07 -1.8605E-10 -1.2758E-07 -2.9766E-10"/>
+              <body name="finger14_link"
+                    pos="0 0 0"
+                    euler="0 0 0">
+                <geom name="finger14_link" type="mesh" mesh="finger14_link" rgba="0.2 0.2 0.2 1" contype="1" conaffinity="1"/>
+                <inertial pos="0.0030983 6.4415E-07 0.024752"
+                          mass="0.00063385"
+                          fullinertia="4.5297E-08 3.0365E-08 3.2628E-08 -1.7549E-11 -6.8692E-09 3.6154E-12"/>
+              </body>
+            </body>
+          </body>
+        </body>
+
+        <!-- ===== 手指 2：食指 (Index) ===== -->
+        <body name="finger21_link"
+              pos="-0.011581 -0.031971 0.10003"
+              euler="0.052657 0.10625 0.0055894">
+          <joint name="finger21" type="hinge" axis="0 1 0" range="0 1.396263" damping="2.0" armature="0.01" frictionloss="0"/>
+          <geom name="finger21_link" type="mesh" mesh="finger21_link" rgba="1 1 1 1"/>
+          <inertial pos="-0.0017977 4.517E-07 0.018685"
+                    mass="0.0067138"
+                    fullinertia="1.195E-06 1.0687E-06 3.7302E-07 4.4817E-12 -4.5105E-09 1.3869E-11"/>
+          <body name="finger22_link"
+                pos="0 0 0.035"
+                euler="0 0 0">
+            <joint name="finger22" type="hinge" axis="0 1 0" range="0.011072 1.687426" damping="2.0" armature="0.01" frictionloss="0"/>
+            <geom name="finger22_link" type="mesh" mesh="finger22_link" rgba="1 1 1 1" contype="1" conaffinity="1"/>
+            <inertial pos="-0.001934 -4.4573E-07 0.02175"
+                      mass="0.014791"
+                      fullinertia="1.4669E-06 1.4892E-06 3.5283E-07 -1.8909E-11 -1.6607E-07 5.6761E-11"/>
+            <body name="finger23_link"
+                  pos="0 0 0"
+                  euler="0 0 0">
+              <geom name="finger23_link" type="mesh" mesh="finger23_link" rgba="0.2 0.2 0.2 1" contype="1" conaffinity="1"/>
+              <inertial pos="0.0027522 -5.9223E-07 0.027469"
+                        mass="0.00081811"
+                        fullinertia="1.0639E-07 9.4373E-08 2.3583E-08 -3.5393E-13 -9.0804E-09 7.1781E-12"/>
+            </body>
+          </body>
+        </body>
+
+        <!-- ===== 手指 3：中指 (Middle) ===== -->
+        <body name="finger31_link"
+              pos="-0.013501 -0.0105 0.10286"
+              euler="0 0.10214 0">
+          <joint name="finger31" type="hinge" axis="0 1 0" range="0 1.396263" damping="2.0" armature="0.01" frictionloss="0"/>
+          <geom name="finger31_link" type="mesh" mesh="finger31_link" rgba="1 1 1 1"/>
+          <inertial pos="-0.0017977 3.6375E-07 0.018685"
+                    mass="0.0067137"
+                    fullinertia="1.195E-06 1.0687E-06 3.7302E-07 7.1207E-12 -4.5072E-09 1.6816E-11"/>
+          <body name="finger32_link"
+                pos="0 0 0.035"
+                euler="0 0 0">
+            <joint name="finger32" type="hinge" axis="0 1 0" range="0.011072 1.687426" damping="2.0" armature="0.01" frictionloss="0"/>
+            <geom name="finger32_link" type="mesh" mesh="finger32_link" rgba="1 1 1 1" contype="1" conaffinity="1"/>
+            <inertial pos="-0.0021235 -2.8524E-07 0.024937"
+                      mass="0.017437"
+                      fullinertia="4.1693E-06 4.1909E-06 4.4314E-07 -2.5515E-11 -2.6509E-07 9.5471E-11"/>
+            <body name="finger33_link"
+                  pos="0 0 0"
+                  euler="0 0 0">
+              <geom name="finger33_link" type="mesh" mesh="finger33_link" rgba="0.2 0.2 0.2 1" contype="1" conaffinity="1"/>
+              <inertial pos="7.153E-07 -0.0067137 -0.037473"
+                        mass="0.00081807"
+                        fullinertia="9.4367E-08 1.0642E-07 2.3554E-08 7.2819E-13 7.4794E-12 -8.9658E-09"/>
+            </body>
+          </body>
+        </body>
+
+        <!-- ===== 手指 4：无名指 (Ring) ===== -->
+        <body name="finger41_link"
+              pos="-0.015081 0.010971 0.10183"
+              euler="-0.052889 0.14148 -0.0074648">
+          <joint name="finger41" type="hinge" axis="0 1 0" range="0 1.396263" damping="2.0" armature="0.01" frictionloss="0"/>
+          <geom name="finger41_link" type="mesh" mesh="finger41_link" rgba="1 1 1 1"/>
+          <inertial pos="-0.0017978 4.6307E-07 0.018685"
+                    mass="0.0067137"
+                    fullinertia="1.195E-06 1.0687E-06 3.7301E-07 -3.5541E-12 -4.505E-09 6.8595E-13"/>
+          <body name="finger42_link"
+                pos="0 0 0.035"
+                euler="0 0 0">
+            <joint name="finger42" type="hinge" axis="0 1 0" range="0.011072 1.687426" damping="2.0" armature="0.01" frictionloss="0"/>
+            <geom name="finger42_link" type="mesh" mesh="finger42_link" rgba="1 1 1 1" contype="1" conaffinity="1"/>
+            <inertial pos="-0.00099518 -3.8607E-07 0.021813"
+                      mass="0.014791"
+                      fullinertia="1.4505E-06 1.4892E-06 3.692E-07 -2.9273E-11 -2.1339E-07 6.1801E-11"/>
+            <body name="finger43_link"
+                  pos="0 0 0"
+                  euler="0 0 0">
+              <geom name="finger43_link" type="mesh" mesh="finger43_link" rgba="0.2 0.2 0.2 1" contype="1" conaffinity="1"/>
+              <inertial pos="0.0039329 -6.1523E-07 0.027325"
+                        mass="0.00081812"
+                        fullinertia="1.0545E-07 9.4369E-08 2.452E-08 -2.6832E-13 -1.261E-08 6.0613E-12"/>
+            </body>
+          </body>
+        </body>
+
+        <!-- ===== 手指 5：小拇指 (Pinky) ===== -->
+        <body name="finger51_link"
+              pos="-0.013081 0.032156 0.097798"
+              euler="-0.078754 0.073706 -0.0058113">
+          <joint name="finger51" type="hinge" axis="0 1 0" range="0 1.396263" damping="2.0" armature="0.01" frictionloss="0"/>
+          <geom name="finger51_link" type="mesh" mesh="finger51_link" rgba="1 1 1 1"/>
+          <inertial pos="-0.0017977 3.5129E-07 0.018685"
+                    mass="0.0067139"
+                    fullinertia="1.195E-06 1.0687E-06 3.7302E-07 2.1372E-12 -4.5117E-09 5.8565E-12"/>
+          <body name="finger52_link"
+                pos="0 0 0.035"
+                euler="0 0 0">
+            <joint name="finger52" type="hinge" axis="0 1 0" range="0.011072 1.687426" damping="2.0" armature="0.01" frictionloss="0"/>
+            <geom name="finger52_link" type="mesh" mesh="finger52_link" rgba="1 1 1 1" contype="1" conaffinity="1"/>
+            <inertial pos="-0.0024418 -8.1825E-07 0.016654"
+                      mass="0.010439"
+                      fullinertia="1.3354E-06 1.3473E-06 2.4653E-07 -3.1558E-11 -1.1834E-07 7.0815E-11"/>
+            <body name="finger53_link"
+                  pos="0 0 0"
+                  euler="0 0 0">
+              <geom name="finger53_link" type="mesh" mesh="finger53_link" rgba="0.2 0.2 0.2 1" contype="1" conaffinity="1"/>
+              <inertial pos="0.0021844 1.1224E-06 0.022782"
+                        mass="0.00058044"
+                        fullinertia="4.4456E-08 3.5896E-08 1.5583E-08 1.8383E-12 -3.5021E-09 -1.5936E-12"/>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <!-- 添加sensor适配解析器 -->
+  <sensor>
+    <force name="force_ee" site="grip_site"/>
+    <torque name="torque_ee" site="grip_site"/>
+  </sensor>
+
+  <equality>
+    <joint name="eq_thumb" joint1="finger13" joint2="finger12"
+           polycoef="0.004592 0.8808 0.469825 0 0"/>
+    <joint name="eq_index" joint1="finger22" joint2="finger21"
+           polycoef="0.011072 0.9206 0.200535 0 0"/>
+    <joint name="eq_middle" joint1="finger32" joint2="finger31"
+           polycoef="0.011072 0.9206 0.200535 0 0"/>
+    <joint name="eq_ring" joint1="finger42" joint2="finger41"
+           polycoef="0.011072 0.9206 0.200535 0 0"/>
+    <joint name="eq_pinky" joint1="finger52" joint2="finger51"
+           polycoef="0.011072 0.9206 0.200535 0 0"/>
+  </equality>
+
+  <actuator>
+    <position name="act_finger11" joint="finger11" kp="50" kv="2.0" ctrlrange="0 1.047198"/>
+    <position name="act_finger12" joint="finger12" kp="50" kv="2.0" ctrlrange="0 0.523599"/>
+    <position name="act_finger21" joint="finger21" kp="50" kv="2.0" ctrlrange="0 1.396263"/>
+    <position name="act_finger31" joint="finger31" kp="50" kv="2.0" ctrlrange="0 1.396263"/>
+    <position name="act_finger41" joint="finger41" kp="50" kv="2.0" ctrlrange="0 1.396263"/>
+    <position name="act_finger51" joint="finger51" kp="50" kv="2.0" ctrlrange="0 1.396263"/>
+  </actuator>
+
+</mujoco>

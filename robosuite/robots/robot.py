@@ -189,6 +189,13 @@ class Robot(object):
             else:
                 # Load null gripper
                 self.gripper[arm] = gripper_factory(None, idn="_".join((str(self.idn), arm)))
+
+            # Robot models may adapt a shared gripper's collision geometry to
+            # their end-effector mount while preserving the visual model.
+            configure_gripper = getattr(self.robot_model, "configure_gripper", None)
+            if configure_gripper is not None:
+                configure_gripper(self.gripper[arm])
+
             # Grab eef rotation offset
             self.eef_rot_offset[arm] = T.quat_multiply(
                 self.robot_model.hand_rotation_offset[arm], self.gripper[arm].rotation_offset
