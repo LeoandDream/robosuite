@@ -25,17 +25,21 @@ class Nero(ManipulatorModel):
         """Use compact collision jaws for DH116 on the Nero mount.
 
         The source DH116 meshes are retained as the physical contact model for
-        other robots. On Nero they intersect the arm/table during the imported
-        hand's neutral pose, so only the two low-volume jaw proxies participate
-        in collision while all visual meshes remain unchanged.
+        other robots. On Nero, the low-volume palm proxies and the palm mesh
+        are allowed to contact the cube/table while the thin distal STL meshes
+        remain visual-only. This makes palm contact explicit without changing
+        the visual hand.
         """
         if type(gripper).__name__ != "DH116":
             return
         for geom in gripper.worldbody.iter("geom"):
             name = geom.get("name", "")
-            if name.endswith(("jaw_left", "jaw_right")):
+            if name.endswith(("palm_left", "palm_right", "palm_support", "base_link", "_pad")):
                 geom.set("contype", "1")
                 geom.set("conaffinity", "1")
+            elif name.endswith(("jaw_left", "jaw_right")):
+                geom.set("contype", "0")
+                geom.set("conaffinity", "0")
             elif geom.get("type") == "mesh":
                 geom.set("contype", "0")
                 geom.set("conaffinity", "0")

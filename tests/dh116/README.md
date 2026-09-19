@@ -11,6 +11,10 @@
 | `test_dh116_integration.py` | 检查 Panda + DH116 的注册、模型拼接、动作维度和控制稳定性 |
 | `test_dh116_lift_task.py` | 在真实 Lift 环境执行带随机小增量和三层限幅的抓取抬升 rollout |
 | `test_nero_dh116_lift.py` | Nero + DH116 的接触确认、抬升回归测试和侧视 MP4 录制 |
+| `nero_dh116.md` | Nero + DH116 v1.0 标准实验报告 |
+| `nero_dh116_technical.md` | 测试脚本的类、函数、主循环和轨迹设计技术文档 |
+| `experiment_logging.py` | 运行日志、项目文件校验和中断状态记录 |
+| `experiment_logs/` | 每次运行的 JSONL 日志与项目变更记录 |
 | `debug_rendering.py` | 检查图形环境、GLFW、robosuite Viewer 调用入口和 GUI 刷新 |
 | `view_dh116_panda_lift.py` | 使用 EGL 无头渲染并输出 H.264 视频 |
 
@@ -38,8 +42,14 @@ python tests/dh116/debug_rendering.py
 # 无头录制，默认写入 vedio/dh116_panda_lift.mp4
 python tests/dh116/view_dh116_panda_lift.py
 
-# Nero + DH116 无头录制，默认写入 vedio/nero_dh116_lift.mp4
-python tests/dh116/test_nero_dh116_lift.py --video
+# Nero + DH116 无头录制，默认 900 步、45 秒，写入 vedio/nero_dh116_lift.mp4
+python tests/dh116/test_nero_dh116_lift.py --steps 900 --video
+
+# 纯物理诊断：关闭接触后稳定器，结果只认定抬升阶段持续成功
+python tests/dh116/test_nero_dh116_lift.py --steps 900 --physical-only
+
+# 查看最近一次运行状态和项目文件校验快照
+cat tests/dh116/experiment_logs/latest.json
 ```
 
 ## 整合记录
