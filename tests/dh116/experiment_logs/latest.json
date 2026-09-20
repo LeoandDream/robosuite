@@ -1,22 +1,22 @@
 {
-  "run_id": "20260919T071433.154974Z_2",
+  "run_id": "20260919T123231.324893Z_2",
   "experiment": "nero_dh116_lift",
   "status": "completed",
-  "log_file": "tests/dh116/experiment_logs/nero_dh116_lift_20260919T071433.154974Z_2.jsonl",
+  "log_file": "tests/dh116/experiment_logs/nero_dh116_lift_20260919T123231.324893Z_2.jsonl",
   "result": {
-    "success": true,
-    "raw_success": true,
-    "final_success": true,
-    "stabilized_grasp": true,
-    "physical_only": false,
+    "success": false,
+    "raw_success": false,
+    "final_success": false,
+    "stabilized_grasp": false,
+    "physical_only": true,
     "contact_step": 500,
     "final_phase": "lift",
-    "final_reward": 1.0,
-    "height_gain": 0.12764653438111795,
+    "final_reward": 0.0,
+    "height_gain": 0.0,
     "max_action": 2.497,
     "lift_max_delta": 0.3,
-    "max_success_streak": 261,
-    "max_lift_success_streak": 261
+    "max_success_streak": 0,
+    "max_lift_success_streak": 0
   },
   "error": {}
 }

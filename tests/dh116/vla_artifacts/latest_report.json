@@ -1,0 +1,518 @@
+{
+  "task": "nero_dh116_small_vla_reach",
+  "commands": [
+    "move above the cube",
+    "return home"
+  ],
+  "collection": {
+    "episodes": 16,
+    "samples": 2240,
+    "seed_start": 1000,
+    "policy_observation_keys": [
+      "agentview_image",
+      "robot0_joint_pos",
+      "robot0_eef_pos"
+    ],
+    "privileged_training_input": false,
+    "privileged_supervision": "cube_xy_labels",
+    "episode_summary": [
+      {
+        "episode": 0,
+        "seed": 1000,
+        "cube_xy": [
+          -0.00464931242843937,
+          -0.04748032919285139
+        ]
+      },
+      {
+        "episode": 1,
+        "seed": 1001,
+        "cube_xy": [
+          -0.04996966769889126,
+          0.057262410326579985
+        ]
+      },
+      {
+        "episode": 2,
+        "seed": 1002,
+        "cube_xy": [
+          0.03961797073091057,
+          -0.017681292943214154
+        ]
+      },
+      {
+        "episode": 3,
+        "seed": 1003,
+        "cube_xy": [
+          -0.0008513076497837918,
+          0.025726649197469642
+        ]
+      },
+      {
+        "episode": 4,
+        "seed": 1004,
+        "cube_xy": [
+          -0.05784362155222539,
+          -0.019095258088442008
+        ]
+      },
+      {
+        "episode": 5,
+        "seed": 1005,
+        "cube_xy": [
+          -0.03403455546115673,
+          0.022169287779279775
+        ]
+      },
+      {
+        "episode": 6,
+        "seed": 1006,
+        "cube_xy": [
+          -0.032346992094531915,
+          -0.041988408848708296
+        ]
+      },
+      {
+        "episode": 7,
+        "seed": 1007,
+        "cube_xy": [
+          0.022868562066985162,
+          -0.04854476082757625
+        ]
+      },
+      {
+        "episode": 8,
+        "seed": 1008,
+        "cube_xy": [
+          -0.045210747325721314,
+          0.0774031127278177
+        ]
+      },
+      {
+        "episode": 9,
+        "seed": 1009,
+        "cube_xy": [
+          -0.07202376606828828,
+          -0.03498777305178788
+        ]
+      },
+      {
+        "episode": 10,
+        "seed": 1010,
+        "cube_xy": [
+          0.06682827729815373,
+          0.0770345358222085
+        ]
+      },
+      {
+        "episode": 11,
+        "seed": 1011,
+        "cube_xy": [
+          -0.04598397845536164,
+          -0.06687376306853324
+        ]
+      },
+      {
+        "episode": 12,
+        "seed": 1012,
+        "cube_xy": [
+          -0.04185017287141189,
+          0.057664108554726215
+        ]
+      },
+      {
+        "episode": 13,
+        "seed": 1013,
+        "cube_xy": [
+          0.02762553460748307,
+          -0.008389038818671007
+        ]
+      },
+      {
+        "episode": 14,
+        "seed": 1014,
+        "cube_xy": [
+          0.06367436911760639,
+          0.07881290246675048
+        ]
+      },
+      {
+        "episode": 15,
+        "seed": 1015,
+        "cube_xy": [
+          0.02260881917084466,
+          -0.06513035128337083
+        ]
+      }
+    ]
+  },
+  "training": {
+    "training_episodes": 12,
+    "validation_episodes": [
+      12,
+      13,
+      14,
+      15
+    ],
+    "split_unit": "episode",
+    "model": "rgb_centroid_calibration_plus_robot_jacobian",
+    "metrics": {
+      "cube_xy_localization": {
+        "validation_samples": 4,
+        "mean_error": 0.002058423566209384,
+        "max_error": 0.002999325544086343,
+        "errors": [
+          0.0024791812809698333,
+          0.002999325544086343,
+          0.0014633659485018182,
+          0.0012918214912795414
+        ]
+      }
+    }
+  },
+  "evaluation": {
+    "episodes": 6,
+    "seed_start": 9000,
+    "held_out_from_collection": true,
+    "closed_loop": true,
+    "stabilizer": false,
+    "object_state_rewrites": false,
+    "policy_has_object_truth": false,
+    "policy_image": "rgb",
+    "by_command": {
+      "move above the cube": {
+        "successes": 6,
+        "episodes": 6,
+        "success_rate": 1.0
+      },
+      "return home": {
+        "successes": 6,
+        "episodes": 6,
+        "success_rate": 1.0
+      }
+    },
+    "episode_results": [
+      {
+        "episode": 0,
+        "seed": 9000,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": true,
+            "eef_target_error": 0.010852709625014986,
+            "threshold": 0.02,
+            "cube_xy": [
+              0.022453678735174953,
+              0.017722925571636794
+            ],
+            "predicted_cube_xy": [
+              0.01954643208460055,
+              0.01675959854543454
+            ],
+            "localization_error": 0.0030626919607900107
+          },
+          {
+            "command": "return home",
+            "success": true,
+            "home_joint_error": 0.0018246032761352344,
+            "threshold": 0.12
+          }
+        ]
+      },
+      {
+        "episode": 1,
+        "seed": 9001,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": true,
+            "eef_target_error": 0.004234011615013394,
+            "threshold": 0.02,
+            "cube_xy": [
+              -0.05069288385199787,
+              0.059256345418813874
+            ],
+            "predicted_cube_xy": [
+              -0.050214601941399206,
+              0.05750456010551066
+            ],
+            "localization_error": 0.0018159034583123499
+          },
+          {
+            "command": "return home",
+            "success": true,
+            "home_joint_error": 0.0018065249278804696,
+            "threshold": 0.12
+          }
+        ]
+      },
+      {
+        "episode": 2,
+        "seed": 9002,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": true,
+            "eef_target_error": 0.010651917083045826,
+            "threshold": 0.02,
+            "cube_xy": [
+              -0.009245329516287912,
+              0.03181749953152593
+            ],
+            "predicted_cube_xy": [
+              -0.012129238931093828,
+              0.030843386696546925
+            ],
+            "localization_error": 0.0030439824782802286
+          },
+          {
+            "command": "return home",
+            "success": true,
+            "home_joint_error": 0.0018223388668590548,
+            "threshold": 0.12
+          }
+        ]
+      },
+      {
+        "episode": 3,
+        "seed": 9003,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": true,
+            "eef_target_error": 0.01874241978845162,
+            "threshold": 0.02,
+            "cube_xy": [
+              0.038247166495016985,
+              -0.0647295716020347
+            ],
+            "predicted_cube_xy": [
+              0.036317422603388855,
+              -0.06308020834986951
+            ],
+            "localization_error": 0.0025385646780944978
+          },
+          {
+            "command": "return home",
+            "success": true,
+            "home_joint_error": 0.0018282653550930389,
+            "threshold": 0.12
+          }
+        ]
+      },
+      {
+        "episode": 4,
+        "seed": 9004,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": true,
+            "eef_target_error": 0.008533838127669561,
+            "threshold": 0.02,
+            "cube_xy": [
+              -0.04574879857887245,
+              0.061377398148823384
+            ],
+            "predicted_cube_xy": [
+              -0.04688509393229448,
+              0.05908186237583967
+            ],
+            "localization_error": 0.002561376898321766
+          },
+          {
+            "command": "return home",
+            "success": true,
+            "home_joint_error": 0.0018056153112183779,
+            "threshold": 0.12
+          }
+        ]
+      },
+      {
+        "episode": 5,
+        "seed": 9005,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": true,
+            "eef_target_error": 0.009958846894770728,
+            "threshold": 0.02,
+            "cube_xy": [
+              0.057381543898725726,
+              0.036288768494529416
+            ],
+            "predicted_cube_xy": [
+              0.05394157489381263,
+              0.03537768845557786
+            ],
+            "localization_error": 0.0035585746573788203
+          },
+          {
+            "command": "return home",
+            "success": true,
+            "home_joint_error": 0.001828103343820304,
+            "threshold": 0.12
+          }
+        ]
+      }
+    ]
+  },
+  "vision_ablation": {
+    "episodes": 6,
+    "seed_start": 9000,
+    "held_out_from_collection": true,
+    "closed_loop": true,
+    "stabilizer": false,
+    "object_state_rewrites": false,
+    "policy_has_object_truth": false,
+    "policy_image": "all_zero_ablation",
+    "by_command": {
+      "move above the cube": {
+        "successes": 0,
+        "episodes": 6,
+        "success_rate": 0.0
+      }
+    },
+    "episode_results": [
+      {
+        "episode": 0,
+        "seed": 9000,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": false,
+            "eef_target_error": 0.1407654923754254,
+            "threshold": 0.02,
+            "cube_xy": [
+              0.022453678735174953,
+              0.017722925571636794
+            ],
+            "predicted_cube_xy": [
+              -0.08,
+              -0.08
+            ],
+            "localization_error": 0.14158575658818973
+          }
+        ]
+      },
+      {
+        "episode": 1,
+        "seed": 9001,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": false,
+            "eef_target_error": 0.1416664207788205,
+            "threshold": 0.02,
+            "cube_xy": [
+              -0.05069288385199787,
+              0.059256345418813874
+            ],
+            "predicted_cube_xy": [
+              -0.08,
+              -0.08
+            ],
+            "localization_error": 0.14230684030051574
+          }
+        ]
+      },
+      {
+        "episode": 2,
+        "seed": 9002,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": false,
+            "eef_target_error": 0.1316609289918495,
+            "threshold": 0.02,
+            "cube_xy": [
+              -0.009245329516287912,
+              0.03181749953152593
+            ],
+            "predicted_cube_xy": [
+              -0.08,
+              -0.08
+            ],
+            "localization_error": 0.1323230010116967
+          }
+        ]
+      },
+      {
+        "episode": 3,
+        "seed": 9003,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": false,
+            "eef_target_error": 0.11868200357331671,
+            "threshold": 0.02,
+            "cube_xy": [
+              0.038247166495016985,
+              -0.0647295716020347
+            ],
+            "predicted_cube_xy": [
+              -0.08,
+              -0.08
+            ],
+            "localization_error": 0.11922910033862393
+          }
+        ]
+      },
+      {
+        "episode": 4,
+        "seed": 9004,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": false,
+            "eef_target_error": 0.14499754138478838,
+            "threshold": 0.02,
+            "cube_xy": [
+              -0.04574879857887245,
+              0.061377398148823384
+            ],
+            "predicted_cube_xy": [
+              -0.08,
+              -0.08
+            ],
+            "localization_error": 0.1454672248519287
+          }
+        ]
+      },
+      {
+        "episode": 5,
+        "seed": 9005,
+        "commands": [
+          {
+            "command": "move above the cube",
+            "success": false,
+            "eef_target_error": 0.17908585698655768,
+            "threshold": 0.02,
+            "cube_xy": [
+              0.057381543898725726,
+              0.036288768494529416
+            ],
+            "predicted_cube_xy": [
+              -0.08,
+              -0.08
+            ],
+            "localization_error": 0.179991017225782
+          }
+        ]
+      }
+    ]
+  },
+  "completion_audit": {
+    "passed": true,
+    "checks": {
+      "policy_inputs_are_rgb_and_proprio_only": true,
+      "train_and_evaluation_seeds_are_disjoint": true,
+      "episode_level_validation_split": true,
+      "validation_localization_below_1cm": true,
+      "rgb_reach_all_successful": true,
+      "return_home_all_successful": true,
+      "black_rgb_reach_all_failed": true,
+      "paired_ablation_uses_identical_initial_targets": true,
+      "no_stabilizer_or_object_rewrite": true
+    }
+  }
+}

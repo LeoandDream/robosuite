@@ -13,6 +13,9 @@
 | `test_nero_dh116_lift.py` | Nero + DH116 的接触确认、抬升回归测试和侧视 MP4 录制 |
 | `nero_dh116.md` | Nero + DH116 v1.0 标准实验报告 |
 | `nero_dh116_technical.md` | 测试脚本的类、函数、主循环和轨迹设计技术文档 |
+| `nero_dh116_vla.py` | 无额外训练依赖的小型视觉语言动作数据闭环 |
+| `VLA_DATA_LOOP.md` | VLA 阶段目标、反作弊边界、数据格式和完成条件 |
+| `VLA_EXPERIMENT_REPORT.md` | 小型 VLA 闭环的结果、反事实对照和限制说明 |
 | `experiment_logging.py` | 运行日志、项目文件校验和中断状态记录 |
 | `experiment_logs/` | 每次运行的 JSONL 日志与项目变更记录 |
 | `debug_rendering.py` | 检查图形环境、GLFW、robosuite Viewer 调用入口和 GUI 刷新 |
