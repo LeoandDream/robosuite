@@ -57,6 +57,23 @@
 - `nero_dh116_reach_locator.npz`：视觉定位标定参数；
 - `latest_report.json`：逐 episode 采集、训练、闭环和消融结果；
 - `nero_dh116_vla.py`：可从头复现实验的单文件入口。
+- `vedio/vla/vla_rgb_seed9000_ep001_001.mp4` … `vla_rgb_seed9005_ep006_001.mp4`：6 个正常 RGB 完整闭环视频，每个 181 帧、20 fps；
+- `vedio/vla/vla_video_manifest.json`：视频编号、种子、帧数和逐指令结果；脚本会寻找下一个空编号并禁止覆盖旧文件；
+- `VLA_TECHNICAL_GUIDE.md`：系统设计、数据字段、代码职责、流程图和复现实验说明。
+
+## 视频记录核验
+
+本次使用命令：
+
+```bash
+python tests/dh116/nero_dh116_vla.py evaluate \
+  --eval-episodes 6 --eval-seed-start 9000 --record-video
+```
+
+视频目录是 `tests/dh116/vedio/vla/`。文件名格式为
+`vla_rgb_seed<seed>_ep<episode>_<run_number>.mp4`；再次运行同一条件时编号递增，旧的
+`tests/dh116/vedio/nero_dh116_lift.mp4` 不会被写入。`ffprobe` 核验首个文件为 128×128、20 fps、
+181 帧、9.05 秒，6 个文件路径均唯一。
 
 ## 下一阶段
 

@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "videos": [
+    {
+      "path": "tests/dh116/vedio/vla/vla_rgb_seed9000_ep001_001.mp4",
+      "seed": 9000,
+      "episode": 0,
+      "commands": [
+        "move above the cube",
+        "return home"
+      ],
+      "frames": 181,
+      "fps": 20,
+      "policy_image": "rgb",
+      "results": [
+        {
+          "command": "move above the cube",
+          "success": true,
+          "eef_target_error": 0.010852709625014986,
+          "threshold": 0.02,
+          "cube_xy": [
+            0.022453678735174953,
+            0.017722925571636794
+          ],
+          "predicted_cube_xy": [
+            0.01954643208460055,
+            0.01675959854543454
+          ],
+          "localization_error": 0.0030626919607900107
+        },
+        {
+          "command": "return home",
+          "success": true,
+          "home_joint_error": 0.0018246032761352344,
+          "threshold": 0.12
+        }
+      ]
+    },
+    {
+      "path": "tests/dh116/vedio/vla/vla_rgb_seed9001_ep002_001.mp4",
+      "seed": 9001,
+      "episode": 1,
+      "commands": [
+        "move above the cube",
+        "return home"
+      ],
+      "frames": 181,
+      "fps": 20,
+      "policy_image": "rgb",
+      "results": [
+        {
+          "command": "move above the cube",
+          "success": true,
+          "eef_target_error": 0.004234011615013394,
+          "threshold": 0.02,
+          "cube_xy": [
+            -0.05069288385199787,
+            0.059256345418813874
+          ],
+          "predicted_cube_xy": [
+            -0.050214601941399206,
+            0.05750456010551066
+          ],
+          "localization_error": 0.0018159034583123499
+        },
+        {
+          "command": "return home",
+          "success": true,
+          "home_joint_error": 0.0018065249278804696,
+          "threshold": 0.12
+        }
+      ]
+    },
+    {
+      "path": "tests/dh116/vedio/vla/vla_rgb_seed9002_ep003_001.mp4",
+      "seed": 9002,
+      "episode": 2,
+      "commands": [
+        "move above the cube",
+        "return home"
+      ],
+      "frames": 181,
+      "fps": 20,
+      "policy_image": "rgb",
+      "results": [
+        {
+          "command": "move above the cube",
+          "success": true,
+          "eef_target_error": 0.010651917083045826,
+          "threshold": 0.02,
+          "cube_xy": [
+            -0.009245329516287912,
+            0.03181749953152593
+          ],
+          "predicted_cube_xy": [
+            -0.012129238931093828,
+            0.030843386696546925
+          ],
+          "localization_error": 0.0030439824782802286
+        },
+        {
+          "command": "return home",
+          "success": true,
+          "home_joint_error": 0.0018223388668590548,
+          "threshold": 0.12
+        }
+      ]
+    },
+    {
+      "path": "tests/dh116/vedio/vla/vla_rgb_seed9003_ep004_001.mp4",
+      "seed": 9003,
+      "episode": 3,
+      "commands": [
+        "move above the cube",
+        "return home"
+      ],
+      "frames": 181,
+      "fps": 20,
+      "policy_image": "rgb",
+      "results": [
+        {
+          "command": "move above the cube",
+          "success": true,
+          "eef_target_error": 0.01874241978845162,
+          "threshold": 0.02,
+          "cube_xy": [
+            0.038247166495016985,
+            -0.0647295716020347
+          ],
+          "predicted_cube_xy": [
+            0.036317422603388855,
+            -0.06308020834986951
+          ],
+          "localization_error": 0.0025385646780944978
+        },
+        {
+          "command": "return home",
+          "success": true,
+          "home_joint_error": 0.0018282653550930389,
+          "threshold": 0.12
+        }
+      ]
+    },
+    {
+      "path": "tests/dh116/vedio/vla/vla_rgb_seed9004_ep005_001.mp4",
+      "seed": 9004,
+      "episode": 4,
+      "commands": [
+        "move above the cube",
+        "return home"
+      ],
+      "frames": 181,
+      "fps": 20,
+      "policy_image": "rgb",
+      "results": [
+        {
+          "command": "move above the cube",
+          "success": true,
+          "eef_target_error": 0.008533838127669561,
+          "threshold": 0.02,
+          "cube_xy": [
+            -0.04574879857887245,
+            0.061377398148823384
+          ],
+          "predicted_cube_xy": [
+            -0.04688509393229448,
+            0.05908186237583967
+          ],
+          "localization_error": 0.002561376898321766
+        },
+        {
+          "command": "return home",
+          "success": true,
+          "home_joint_error": 0.0018056153112183779,
+          "threshold": 0.12
+        }
+      ]
+    },
+    {
+      "path": "tests/dh116/vedio/vla/vla_rgb_seed9005_ep006_001.mp4",
+      "seed": 9005,
+      "episode": 5,
+      "commands": [
+        "move above the cube",
+        "return home"
+      ],
+      "frames": 181,
+      "fps": 20,
+      "policy_image": "rgb",
+      "results": [
+        {
+          "command": "move above the cube",
+          "success": true,
+          "eef_target_error": 0.009958846894770728,
+          "threshold": 0.02,
+          "cube_xy": [
+            0.057381543898725726,
+            0.036288768494529416
+          ],
+          "predicted_cube_xy": [
+            0.05394157489381263,
+            0.03537768845557786
+          ],
+          "localization_error": 0.0035585746573788203
+        },
+        {
+          "command": "return home",
+          "success": true,
+          "home_joint_error": 0.001828103343820304,
+          "threshold": 0.12
+        }
+      ]
+    }
+  ]
+}

@@ -16,6 +16,7 @@
 | `nero_dh116_vla.py` | 无额外训练依赖的小型视觉语言动作数据闭环 |
 | `VLA_DATA_LOOP.md` | VLA 阶段目标、反作弊边界、数据格式和完成条件 |
 | `VLA_EXPERIMENT_REPORT.md` | 小型 VLA 闭环的结果、反事实对照和限制说明 |
+| `VLA_TECHNICAL_GUIDE.md` | VLA 的系统设计、数据字段、代码说明、实验记录、流程图和视频规范 |
 | `experiment_logging.py` | 运行日志、项目文件校验和中断状态记录 |
 | `experiment_logs/` | 每次运行的 JSONL 日志与项目变更记录 |
 | `debug_rendering.py` | 检查图形环境、GLFW、robosuite Viewer 调用入口和 GUI 刷新 |
@@ -47,6 +48,9 @@ python tests/dh116/view_dh116_panda_lift.py
 
 # Nero + DH116 无头录制，默认 900 步、45 秒，写入 vedio/nero_dh116_lift.mp4
 python tests/dh116/test_nero_dh116_lift.py --steps 900 --video
+
+# VLA 留出评测并保存不覆盖旧文件的编号视频
+python tests/dh116/nero_dh116_vla.py evaluate --eval-episodes 6 --record-video
 
 # 纯物理诊断：关闭接触后稳定器，结果只认定抬升阶段持续成功
 python tests/dh116/test_nero_dh116_lift.py --steps 900 --physical-only

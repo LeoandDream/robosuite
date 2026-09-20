@@ -18,6 +18,7 @@ the base robosuite environment without PyTorch or h5py.
 import argparse
 import json
 import os
+import subprocess
 from pathlib import Path
 
 os.environ.setdefault("MUJOCO_GL", "egl")
@@ -37,6 +38,7 @@ ARTIFACT_DIR = ROOT / "vla_artifacts"
 DATASET_PATH = ARTIFACT_DIR / "nero_dh116_reach_dataset.npz"
 MODEL_PATH = ARTIFACT_DIR / "nero_dh116_reach_locator.npz"
 REPORT_PATH = ARTIFACT_DIR / "latest_report.json"
+VIDEO_DIR = ROOT / "vedio" / "vla"
 
 IMAGE_SIZE = 32
 CAMERA_SIZE = 128
@@ -51,6 +53,100 @@ HOME_QPOS = np.zeros(7, dtype=np.float64)
 
 COMMANDS = ("move above the cube", "return home")
 MOVE_ABOVE, RETURN_HOME = range(len(COMMANDS))
+VIDEO_FPS = 20
+
+
+def report_path(path):
+    """Prefer repository-relative artifact paths so reports remain portable."""
+    path = Path(path)
+    try:
+        return str(path.resolve().relative_to(ROOT.resolve()))
+    except ValueError:
+        return str(path)
+
+
+def next_numbered_video_path(video_dir, stem):
+    """Return the first unused numbered path without touching existing videos."""
+    video_dir = Path(video_dir)
+    video_dir.mkdir(parents=True, exist_ok=True)
+    number = 1
+    while True:
+        candidate = video_dir / f"{stem}_{number:03d}.mp4"
+        if not candidate.exists():
+            return candidate
+        number += 1
+
+
+def start_video_writer(path, width=CAMERA_SIZE, height=CAMERA_SIZE, fps=VIDEO_FPS):
+    """Start an ffmpeg raw-RGB writer with an explicit no-overwrite guard."""
+    path = Path(path)
+    if path.exists():
+        raise FileExistsError(f"refusing to overwrite existing video: {path}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    command = [
+        "ffmpeg",
+        "-loglevel",
+        "error",
+        "-nostdin",
+        "-n",
+        "-f",
+        "rawvideo",
+        "-pixel_format",
+        "rgb24",
+        "-video_size",
+        f"{width}x{height}",
+        "-framerate",
+        str(fps),
+        "-i",
+        "-",
+        "-an",
+        "-c:v",
+        "libx264",
+        "-crf",
+        "18",
+        "-pix_fmt",
+        "yuv420p",
+        str(path),
+    ]
+    return subprocess.Popen(command, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+
+
+def write_video_frame(writer, image):
+    """Write one uint8 HWC RGB frame and return its byte count."""
+    frame = np.asarray(image)
+    if frame.ndim != 3 or frame.shape[-1] != 3:
+        raise ValueError(f"expected an HWC RGB frame, got shape {frame.shape}")
+    if frame.dtype != np.uint8:
+        frame = np.clip(frame, 0, 255).astype(np.uint8)
+    writer.stdin.write(np.ascontiguousarray(frame).tobytes())
+    return 1
+
+
+def finish_video_writer(writer):
+    """Close ffmpeg and fail loudly if encoding did not complete."""
+    if writer is None:
+        return
+    if writer.stdin is not None and not writer.stdin.closed:
+        writer.stdin.close()
+    return_code = writer.wait(timeout=60)
+    error = writer.stderr.read().decode("utf-8", errors="replace") if writer.stderr else ""
+    if return_code != 0:
+        raise RuntimeError(f"ffmpeg failed with code {return_code}: {error.strip()}")
+
+
+def append_video_manifest(video_dir, records):
+    """Append video metadata while preserving records from earlier runs."""
+    video_dir = Path(video_dir)
+    manifest_path = video_dir / "vla_video_manifest.json"
+    if manifest_path.exists():
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    else:
+        manifest = {"schema_version": 1, "videos": []}
+    manifest.setdefault("schema_version", 1)
+    manifest.setdefault("videos", [])
+    manifest["videos"].extend(records)
+    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return manifest_path
 
 
 def make_env(seed):
@@ -331,16 +427,29 @@ class RidgeVLAPolicy:
         return qpos + np.clip(delta, -MAX_JOINT_STEP, MAX_JOINT_STEP)
 
 
-def evaluate(model_path, episodes, seed_start, blank_image=False):
+def evaluate(model_path, episodes, seed_start, blank_image=False, record_video=False, video_dir=None):
     """Run the learned policy closed-loop on seeds absent from the dataset."""
+    if record_video and blank_image:
+        raise ValueError("video recording is reserved for the normal RGB evaluation")
+    video_dir = Path(video_dir or VIDEO_DIR)
     policy = RidgeVLAPolicy(model_path)
     episode_results = []
+    video_records = []
     for episode in range(episodes):
         seed = seed_start + episode
         env, observation = make_env(seed)
         policy.reset()
+        writer = None
+        video_path = None
+        frame_count = 0
         try:
             initial_cube_position = cube_position_for_expert_or_metric(env)
+            if record_video:
+                video_path = next_numbered_video_path(
+                    video_dir, f"vla_rgb_seed{seed}_ep{episode + 1:03d}"
+                )
+                writer = start_video_writer(video_path)
+                frame_count += write_video_frame(writer, observation["agentview_image"])
             command_results = []
             command_ids = (MOVE_ABOVE,) if blank_image else (MOVE_ABOVE, RETURN_HOME)
             for command_id in command_ids:
@@ -352,6 +461,8 @@ def evaluate(model_path, episodes, seed_start, blank_image=False):
                             observation, command_id, env=env, blank_image=blank_image
                         ),
                     )
+                    if writer is not None:
+                        frame_count += write_video_frame(writer, observation["agentview_image"])
                 robot, arm, _, _ = arm_handles(env)
                 if command_id == MOVE_ABOVE:
                     target = initial_cube_position + np.array([0.0, 0.0, TOUCH_HEIGHT])
@@ -373,7 +484,21 @@ def evaluate(model_path, episodes, seed_start, blank_image=False):
                     metric = {"home_joint_error": error, "threshold": HOME_TOLERANCE}
                 command_results.append({"command": command, "success": bool(success), **metric})
             episode_results.append({"episode": episode, "seed": seed, "commands": command_results})
+            if video_path is not None:
+                video_records.append(
+                    {
+                        "path": report_path(video_path),
+                        "seed": seed,
+                        "episode": episode,
+                        "commands": list(COMMANDS),
+                        "frames": frame_count,
+                        "fps": VIDEO_FPS,
+                        "policy_image": "rgb",
+                        "results": command_results,
+                    }
+                )
         finally:
+            finish_video_writer(writer)
             env.close()
 
     all_results = [item for episode in episode_results for item in episode["commands"]]
@@ -398,6 +523,7 @@ def evaluate(model_path, episodes, seed_start, blank_image=False):
         "policy_image": "all_zero_ablation" if blank_image else "rgb",
         "by_command": by_command,
         "episode_results": episode_results,
+        "videos": video_records,
     }
 
 
@@ -415,6 +541,12 @@ def parse_args():
     parser.add_argument("--eval-seed-start", type=int, default=9000)
     parser.add_argument("--dataset", type=Path, default=DATASET_PATH)
     parser.add_argument("--model", type=Path, default=MODEL_PATH)
+    parser.add_argument(
+        "--record-video",
+        action="store_true",
+        help="record numbered normal-RGB evaluation videos without overwriting old files",
+    )
+    parser.add_argument("--video-dir", type=Path, default=VIDEO_DIR)
     return parser.parse_args()
 
 
@@ -431,7 +563,16 @@ def main():
     if args.stage in ("train", "all"):
         report["training"] = train(args.dataset, args.model)
     if args.stage in ("evaluate", "all"):
-        report["evaluation"] = evaluate(args.model, args.eval_episodes, args.eval_seed_start)
+        report["evaluation"] = evaluate(
+            args.model,
+            args.eval_episodes,
+            args.eval_seed_start,
+            record_video=args.record_video,
+            video_dir=args.video_dir,
+        )
+        if report["evaluation"]["videos"]:
+            manifest_path = append_video_manifest(args.video_dir, report["evaluation"]["videos"])
+            report["evaluation"]["video_manifest"] = report_path(manifest_path)
         report["vision_ablation"] = evaluate(
             args.model, args.eval_episodes, args.eval_seed_start, blank_image=True
         )

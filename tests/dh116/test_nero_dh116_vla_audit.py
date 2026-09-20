@@ -5,7 +5,12 @@ import json
 import cv2
 import numpy as np
 
-from nero_dh116_vla import REPORT_PATH, completion_audit, locator_features
+from nero_dh116_vla import (
+    REPORT_PATH,
+    completion_audit,
+    locator_features,
+    next_numbered_video_path,
+)
 
 
 def test_locator_features_are_resolution_independent():
@@ -25,3 +30,15 @@ def test_saved_report_passes_no_cheating_completion_audit():
 
     assert audit["passed"]
     assert all(audit["checks"].values())
+
+
+def test_numbered_video_path_never_reuses_existing_file(tmp_path):
+    video_dir = tmp_path / "vla"
+    video_dir.mkdir()
+    (video_dir / "reach_001.mp4").write_bytes(b"old-1")
+    (video_dir / "reach_002.mp4").write_bytes(b"old-2")
+
+    candidate = next_numbered_video_path(video_dir, "reach")
+
+    assert candidate.name == "reach_003.mp4"
+    assert (video_dir / "reach_001.mp4").read_bytes() == b"old-1"
